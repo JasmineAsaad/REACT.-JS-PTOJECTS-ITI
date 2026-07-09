@@ -1,0 +1,51 @@
+body{
+    background-color: bisque;
+    font-family: Arial, sans-serif;
+}
+
+nav{
+    background-color: brown;
+    padding: 10px;
+}
+
+nav a{
+    color: white;
+    text-decoration: none;
+    margin: 10px;
+}
+
+main{
+    background-color: white;
+    padding: 20px;
+}
+
+h2{
+    color: brown;
+}
+
+fieldset{
+    border: 1px solid brown;
+    margin: 10px 0;
+    padding: 10px;
+}
+
+legend{
+    color: brown;
+    font-weight: bold;
+}
+
+input,
+textarea{
+    padding: 5px;
+}
+
+button{
+    background-color: brown;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+}
+
+button:hover{
+    background-color: darkred;
+}
