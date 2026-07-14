@@ -8,7 +8,7 @@
 .hero-section {
   width: 100%;
   height: 100vh;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('20dc07aa-329e-4159-99ee-9a0f74857e9b.jpg');
+  background-image: url('20dc07aa-329e-4159-99ee-9a0f74857e9b.jpg');
   background-size: cover;
   background-position: center;
   position: relative;
