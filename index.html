@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Family Bakery</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBF1E4;
+    --choc:#241812;
+    --choc-soft:#4A2E1C;
+    --ember:#B9723A;
+    --ember-dark:#9C4B22;
+    --gold:#D9A441;
+    --line:rgba(46,26,16,0.12);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--cream);
+    color:var(--choc);
+    font-family:'Karla', sans-serif;
+    font-size:1.05rem;
+    line-height:1.65;
+  }
+  h1,h2,h3,.display-font{font-family:'Fraunces', serif; color:var(--choc);}
+  .eyebrow{
+    text-transform:uppercase; letter-spacing:.18em; font-size:.75rem;
+    font-weight:700; color:var(--ember-dark);
+  }
+  a{text-decoration:none;}
+
+  .btn-ember{
+    background:var(--ember); color:#fff; border:1px solid var(--ember);
+    padding:.85rem 2rem; border-radius:2px; font-weight:700;
+    letter-spacing:.03em; transition:all .25s ease;
+  }
+  .btn-ember:hover{background:transparent; color:#fff; border-color:#fff;}
+  .btn-outline-cream{
+    border:1px solid rgba(255,255,255,.65); color:#fff;
+    padding:.85rem 2rem; border-radius:2px; font-weight:700;
+    letter-spacing:.03em; transition:all .25s ease; background:transparent;
+  }
+  .btn-outline-cream:hover{background:#fff; color:var(--choc); border-color:#fff;}
+  .site-nav{
+    position:absolute; top:0; left:0; width:100%; z-index:50;
+    padding:1.4rem 0;
+  }
+  .site-nav .brand{
+    display:flex; align-items:center; gap:.6rem;
+    font-family:'Fraunces', serif; font-weight:700; font-size:1.35rem; color:#fff;
+  }
+  .site-nav .brand .mark{
+    width:34px; height:34px; border-radius:50%;
+    background:var(--ember);
+    display:flex; align-items:center; justify-content:center; color:#fff; font-size:1rem;
+  }
+  .site-nav .nav-links{
+    display:flex; align-items:center; gap:2.2rem; list-style:none; margin:0; padding:0;
+  }
+  .site-nav .nav-links a{
+    color:rgba(255,255,255,.9); font-weight:500; font-size:.92rem; position:relative; padding-bottom:3px;
+  }
+  .site-nav .nav-links a::after{
+    content:""; position:absolute; left:0; bottom:0; width:0; height:2px;
+    background:var(--gold); transition:width .25s ease;
+  }
+  .site-nav .nav-links a:hover::after{width:100%;}
+  @media (max-width:991px){
+    .site-nav .nav-links{gap:1rem; font-size:.82rem; flex-wrap:wrap; justify-content:center;}
+  }
+  .hero{
+    position:relative;
+    min-height:88vh;
+    display:grid;
+    place-items:center;
+    background:
+      linear-gradient(180deg, rgba(20,12,8,.55) 0%, rgba(20,12,8,.35) 45%, rgba(20,12,8,.75) 100%),
+      url('images/c2095778-7e9f-4b0f-91bb-58d93e85bfea.jpg') center/cover no-repeat;
+    text-align:center;
+    color:#fff;
+    padding:7rem 1.5rem 4rem;
+  }
+  .hero-inner{max-width:680px;}
+  .hero .eyebrow{color:var(--gold);}
+  .hero h1{
+    font-size:clamp(2.6rem, 6vw, 4.2rem);
+    margin:.5rem 0 1.4rem;
+    line-height:1.05;
+  }
+  .hero p.lead-text{
+    color:rgba(255,255,255,.85);
+    max-width:46ch;
+    margin:0 auto 2.2rem;
+  }
+  .hero-actions{display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;}
+  .hero-scroll{
+    position:absolute; bottom:1.8rem; left:50%; transform:translateX(-50%);
+    width:38px; height:38px; border:1px solid rgba(255,255,255,.5); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; color:#fff;
+    animation:bob 2.2s ease-in-out infinite;
+  }
+  @keyframes bob{
+    0%,100%{transform:translate(-50%,0);}
+    50%{transform:translate(-50%,8px);}
+  }
+  @media (prefers-reduced-motion: reduce){ .hero-scroll{animation:none;} }
+  .about-img-wrap;
+    position:relative;
+    border-radius:4px;
+    overflow:hidden;
+  }
+  .about-img-wrap img{width:100%; height:100%; object-fit:cover; display:block; aspect-ratio:4/3;}
+  .about-badge{
+    position:absolute; bottom:-1.2rem; right:-1.2rem;
+    background:var(--ember); color:#fff;
+    padding:1.1rem 1.4rem; border-radius:4px;
+    font-family:'Fraunces',serif;
+    box-shadow:0 18px 34px -16px rgba(46,26,16,.5);
+  }
+  @media (max-width:991px){ .about-badge{right:1rem; bottom:-1rem;} }
+  .about-badge strong{display:block; font-size:1.5rem; line-height:1;}
+  .about-badge span{font-size:.72rem; text-transform:uppercase; letter-spacing:.08em;}
+
+  .check-list{display:flex; flex-direction:column; gap:1.1rem; margin-top:1.8rem;}
+  .check-item{display:flex; align-items:center; gap:1rem;}
+  .check-item .ic{
+    flex-shrink:0;
+    width:42px; height:42px; border-radius:50%;
+    border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--ember-dark); font-size:1rem;
+  }
+  .check-item span{font-size:.95rem; color:var(--choc-soft);}
+
+  .section{padding:5.5rem 0;}
+  .section-head{max-width:640px; margin:0 auto 3rem;}
+  .section-title{font-size:clamp(1.9rem,3.2vw,2.6rem); margin-top:.4rem;}
+  .section-dark{background:var(--choc); color:var(--cream);}
+  .section-dark h2,.section-dark h3{color:var(--cream);}
+  .section-dark .eyebrow{color:var(--gold);}
+  .section-dark p{color:#D8C6B8;}
+
+  .menu-card{
+    background:#fff; border:1px solid var(--line); border-radius:6px; overflow:hidden;
+    height:100%; display:flex; flex-direction:column;
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .menu-card:hover{transform:translateY(-6px); box-shadow:0 18px 34px -18px rgba(46,26,16,.35);}
+  .menu-card .thumb{aspect-ratio:4/3; overflow:hidden;}
+  .menu-card .thumb img{width:100%; height:100%; object-fit:cover;}
+  .menu-card .body{padding:1.3rem 1.4rem 1.5rem; display:flex; flex-direction:column; gap:.5rem; flex:1;}
+  .menu-card .row-top{display:flex; justify-content:space-between; align-items:baseline; gap:.5rem;}
+  .menu-card .row-top h3{font-size:1.1rem; margin:0;}
+  .menu-card .price{color:var(--ember-dark); font-weight:700; font-family:'Fraunces',serif;}
+  .menu-card p{font-size:.9rem; color:var(--choc-soft); margin:0; flex:1;}
+  .menu-card .tag{
+    align-self:flex-start; font-size:.68rem; text-transform:uppercase; letter-spacing:.08em;
+    color:var(--ember-dark); background:rgba(185,114,58,.12); padding:.25rem .6rem; border-radius:20px;
+  }
+
+  .gallery-item{overflow:hidden; border-radius:5px; margin-bottom:1.5rem;}
+  .gallery-item img{width:100%; height:100%; object-fit:cover; display:block; aspect-ratio:1/1; transition:transform .4s ease;}
+  .gallery-item:hover img{transform:scale(1.06);}
+
+  footer{background:var(--choc); color:#C9B7A8; padding:3rem 0 1.6rem;}
+  footer .brand{color:var(--cream); display:flex; align-items:center; gap:.6rem; font-family:'Fraunces',serif; font-weight:700; font-size:1.3rem;}
+  footer .brand .mark{
+    width:32px; height:32px; border-radius:50%; background:var(--ember);
+    display:flex; align-items:center; justify-content:center; color:#fff;
+  }
+  footer h4{color:var(--cream); font-family:'Fraunces',serif; font-size:1rem; margin-bottom:.9rem;}
+  footer ul{list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:.55rem;}
+  footer a{color:#C9B7A8; font-size:.9rem;}
+  footer a:hover{color:var(--gold);}
+  .footer-bottom{border-top:1px solid rgba(255,255,255,.1); margin-top:2rem; padding-top:1.4rem; font-size:.8rem; color:#9C8B7C;}
+</style>
+</head>
+<body>
+<header class="site-nav">
+  <div class="container d-flex justify-content-between align-items-center">
+    <a href="#" class="brand"> 
+        <span class="mark"><i class="bi bi-egg-fried"></i></span>Bakery</a>
+    <ul class="nav-links d-none d-lg-flex">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#menu">Our Offer</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#reviews">Blog</a></li>
+      <li><a href="#visit">Contact</a></li>
+    </ul>
+  </div>
+</header>
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <p class="eyebrow">Welcome to</p>
+    <h1>Family Bakery</h1>
+    <p class="lead-text">We're the biggest, best equipped and most advanced bakery in the greater Los Angeles area, baking slow bread the same way we did thirty years ago.</p>
+    <div class="hero-actions">
+      <a href="#about" class="btn-ember">Learn More</a>
+      <a href="#visit" class="btn-outline-cream">Contact us</a>
+    </div>
+  </div>
+</section>
+<section class="section" id="about">
+  <div class="container">
+    <div class="row g-5 align-items-center">
+      <div class="col-lg-6">
+        <div class="about-img-wrap">
+          <img src="bake/20dc07aa-329e-4159-99ee-9a0f74857e9b.jpg" alt="Fresh baguettes cooling on a tray">
+        </div>
+      </div>
+      <div class="col-lg-6 ps-lg-4">
+        <p class="eyebrow">Who we are?</p>
+        <h2 class="section-title">A family bakery, thirty years in the making.</h2>
+        <p class="mt-3">We've been operating for over thirty years and are members of the Federation of Master Bakers. We work on orders big and small, from a single loaf to full-scale catering, and we're happiest when a customer walks out smiling.</p>
+        <div class="check-list">
+          <div class="check-item"><span class="ic"><i class="bi bi-leaf"></i></span><span>We care about the environment.</span></div>
+          <div class="check-item"><span class="ic"><i class="bi bi-people"></i></span><span>We are trusted by hundreds of clients.</span></div>
+          <div class="check-item"><span class="ic"><i class="bi bi-heart"></i></span><span>Social media loves us!</span></div>
+          <div class="check-item"><span class="ic"><i class="bi bi-check-lg"></i></span><span>This list is super easy to create.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-12 col-lg-4">
+        <a href="#" class="brand"><span class="mark"><i class="bi bi-egg-fried"></i></span>Bakery</a>
+        <p class="mt-3" style="font-size:.88rem;">A neighborhood wood-fired bakery baking slow bread and honest pastry, one tray at a time.</p>
+      </div>
+      <div class="col-6 col-lg-2">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#menu">Our Offer</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-lg-2">
+        <h4>Bakery</h4>
+        <ul>
+          <li><a href="#reviews">Blog</a></li>
+          <li><a href="#visit">Contact</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div class="col-12 col-lg-4">
+        <h4>Follow</h4>
+        <ul>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom d-flex justify-content-between flex-wrap gap-2">
+      <span>© 2026 Family Bakery. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+<script src="./js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
